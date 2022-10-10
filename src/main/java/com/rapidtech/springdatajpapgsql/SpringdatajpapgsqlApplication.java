@@ -47,6 +47,24 @@ public class SpringdatajpapgsqlApplication implements CommandLineRunner {
 		List<Book> bookByWriter = bookRepository.findAllByWriterContaining("Erick");
 		LOG.info("-----> Book by Writer : "+bookByWriter.get(0).getTitle());
 
+		Book myBook = bookRepository.findByIsbn("IS-99887766");
+		LOG.info("-----> Book by Isbn : "+myBook.getTitle());
+
+		List<Book> bookByIsbn = bookRepository.findAllByIsbnContaining("8");
+		for (Book book:bookByIsbn) {
+			LOG.info("-----> Book by ISBN : "+book.getTitle());
+		}
+
+		List<Book> nativeQuery = bookRepository.findAllQueryNative();
+		for (Book book:bookByIsbn) {
+			LOG.info("-----> Book Native : "+book.getTitle());
+		}
+
+		List<Book> booksWriteNative = bookRepository.findAllByWriterNative("Erick Kurniawan");
+		for (Book book:booksWriteNative) {
+			LOG.info("-----> Book Writer Native : "+book.getTitle());
+		}
+
 		//LOG.info("----- Berhasil menyimpan: "+book1.getTitle());
 		//LOG.info("----- Berhasil menyimpan: "+book2.getTitle());
 	}

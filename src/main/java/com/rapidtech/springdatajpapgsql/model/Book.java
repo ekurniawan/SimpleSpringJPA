@@ -7,6 +7,12 @@ public class Book {
     public Book() {
     }
 
+    public Book(String title, String writer, String isbn) {
+        this.title = title;
+        this.writer = writer;
+        this.isbn = isbn;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,6 +25,10 @@ public class Book {
 
     @Column(nullable = false)
     private String isbn;
+
+    @ManyToOne
+    @JoinColumn
+    private BookCategory bookCategory;
 
     public Long getId(){
         return id;
@@ -50,5 +60,13 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public BookCategory getBookCategory() {
+        return bookCategory;
+    }
+
+    public void setBookCategory(BookCategory bookCategory) {
+        this.bookCategory = bookCategory;
     }
 }
