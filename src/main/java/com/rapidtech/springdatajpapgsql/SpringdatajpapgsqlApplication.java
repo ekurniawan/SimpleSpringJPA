@@ -4,6 +4,8 @@ import com.rapidtech.springdatajpapgsql.model.Book;
 import com.rapidtech.springdatajpapgsql.model.BookCategory;
 import com.rapidtech.springdatajpapgsql.repository.BookCategoryRepository;
 import com.rapidtech.springdatajpapgsql.repository.BookRepository;
+import com.rapidtech.springdatajpapgsql.repository.CourseRepository;
+import com.rapidtech.springdatajpapgsql.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,12 @@ public class SpringdatajpapgsqlApplication implements CommandLineRunner {
 
 	@Autowired
 	private BookCategoryRepository bookCategoryRepository;
+
+	@Autowired
+	private StudentRepository studentRepository;
+
+	@Autowired
+	private CourseRepository courseRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -102,12 +110,23 @@ public class SpringdatajpapgsqlApplication implements CommandLineRunner {
 			LOG.warn("-----> Id Book tidak ditemukan");
 		}*/
 
-		List<Book> books = bookRepository.findAll();
+		/*List<Book> books = bookRepository.findAll();
 		for(Book book : books)
 		{
 			LOG.info("-----> Book "+book.getTitle()+" - Category: "
 					+ book.getBookCategory().getId() +" - "+  book.getBookCategory().getName());
-		}
+		}*/
+		Optional<BookCategory> bookCatOpt = bookCategoryRepository.findById(3l);
 
+		if(bookCatOpt.isPresent()){
+			BookCategory bookCat = bookCatOpt.get();
+			List<Book> lstBook = bookRepository.findAllByBookCategory(bookCat);
+			bookCat.setBooks(lstBook);
+			//LOG.info("-----> "+bookCat.getBooks().get(0).getTitle());
+			for(Book book:lstBook){
+				LOG.info("----> "+book.getTitle());
+			}
+
+		}
 	}
 }
