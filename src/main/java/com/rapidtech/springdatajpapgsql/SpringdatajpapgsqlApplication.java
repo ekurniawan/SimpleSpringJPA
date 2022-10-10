@@ -9,6 +9,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.List;
+
 @SpringBootApplication
 public class SpringdatajpapgsqlApplication implements CommandLineRunner {
 
@@ -34,10 +36,18 @@ public class SpringdatajpapgsqlApplication implements CommandLineRunner {
 		book2.setWriter("Scott Gu");
 		book2.setIsbn("IS-8877665");
 
-		bookRepository.save(book1);
-		bookRepository.save(book2);
+		//bookRepository.save(book1);
+		//bookRepository.save(book2);
 
-		LOG.info("----- Berhasil menyimpan: "+book1.getTitle());
-		LOG.info("----- Berhasil menyimpan: "+book2.getTitle());
+		List<Book> books = bookRepository.findAll();
+
+		LOG.info("-----> Book: "+books.get(0).getTitle());
+		LOG.info("-----> Book: "+books.get(1).getTitle());
+
+		List<Book> bookByWriter = bookRepository.findAllByWriterContaining("Erick");
+		LOG.info("-----> Book by Writer : "+bookByWriter.get(0).getTitle());
+
+		//LOG.info("----- Berhasil menyimpan: "+book1.getTitle());
+		//LOG.info("----- Berhasil menyimpan: "+book2.getTitle());
 	}
 }
