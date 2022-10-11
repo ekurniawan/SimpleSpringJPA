@@ -13,8 +13,8 @@ public class Course {
     private int modules;
     private double fee;
 
-    @ManyToMany(mappedBy = "courses",fetch = FetchType.LAZY)
-    private Set<Student> students;
+    @ManyToMany(mappedBy = "courses",fetch = FetchType.EAGER)
+    private Set<Student> students = new HashSet<>();
 
     public Course() {
     }

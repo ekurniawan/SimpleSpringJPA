@@ -2,6 +2,8 @@ package com.rapidtech.springdatajpapgsql;
 
 import com.rapidtech.springdatajpapgsql.model.Book;
 import com.rapidtech.springdatajpapgsql.model.BookCategory;
+import com.rapidtech.springdatajpapgsql.model.Course;
+import com.rapidtech.springdatajpapgsql.model.Student;
 import com.rapidtech.springdatajpapgsql.repository.BookCategoryRepository;
 import com.rapidtech.springdatajpapgsql.repository.BookRepository;
 import com.rapidtech.springdatajpapgsql.repository.CourseRepository;
@@ -13,6 +15,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -116,7 +119,7 @@ public class SpringdatajpapgsqlApplication implements CommandLineRunner {
 			LOG.info("-----> Book "+book.getTitle()+" - Category: "
 					+ book.getBookCategory().getId() +" - "+  book.getBookCategory().getName());
 		}*/
-		Optional<BookCategory> bookCatOpt = bookCategoryRepository.findById(3l);
+		/*Optional<BookCategory> bookCatOpt = bookCategoryRepository.findById(3l);
 
 		if(bookCatOpt.isPresent()){
 			BookCategory bookCat = bookCatOpt.get();
@@ -127,6 +130,31 @@ public class SpringdatajpapgsqlApplication implements CommandLineRunner {
 				LOG.info("----> "+book.getTitle());
 			}
 
-		}
+		}*/
+
+		/*Student student1 = new Student();
+		student1.setName("Jhon");
+		student1.setAge(20);
+
+		Student student2 = new Student("Tom",19);
+		studentRepository.save(student1);
+		studentRepository.save(student2);
+		LOG.info("-----> Berhasil menambahkan data");*/
+
+		/*Course course1 = new Course("Introduction to Spring Boot",12,1000);
+		Course course2 = new Course("RESTful API with Spring Boot",15,1200);
+		Course course3 = new Course("Spring Boot Microservices",12,1500);
+
+		courseRepository.saveAll(Arrays.asList(course1,course2,course3));
+		LOG.info("-----> Berhasil menambahkan data courses");*/
+
+		//student1 ditambahkan ke course1
+		Student student1 = studentRepository.findById(1l).get();
+		Course course1 = courseRepository.findById(1l).get();
+
+		student1.getCourses().addAll(Arrays.asList(course1));
+
+		studentRepository.save(student1);
+		LOG.info("-----> Berhasil mendaftarkan student1 ke course1");
 	}
 }

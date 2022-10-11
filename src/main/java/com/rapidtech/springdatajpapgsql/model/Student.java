@@ -12,7 +12,7 @@ public class Student {
     private String name;
     private int age;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "students_courses",
             joinColumns = {
             @JoinColumn(name = "student_id",referencedColumnName = "id",
@@ -22,7 +22,7 @@ public class Student {
             @JoinColumn(name = "course_id",referencedColumnName = "id",
                     nullable = false,updatable = false)
     })
-    private Set<Course> courses;
+    private Set<Course> courses = new HashSet<>();
 
     public Student() {
     }
