@@ -22,16 +22,16 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication
-public class SpringdatajpapgsqlApplication implements CommandLineRunner {
+public class SpringdatajpapgsqlApplication  {
 
-	private final Logger LOG =
-			LoggerFactory.getLogger(SpringdatajpapgsqlApplication.class);
+	/*private final Logger LOG =
+			LoggerFactory.getLogger(SpringdatajpapgsqlApplication.class);*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringdatajpapgsqlApplication.class, args);
 	}
 
-	@Autowired
+	/*@Autowired
 	private BookRepository bookRepository;
 
 	@Autowired
@@ -41,10 +41,10 @@ public class SpringdatajpapgsqlApplication implements CommandLineRunner {
 	private StudentRepository studentRepository;
 
 	@Autowired
-	private CourseRepository courseRepository;
+	private CourseRepository courseRepository;*/
 
-	@Override
-	public void run(String... args) throws Exception {
+	//@Override
+	//public void run(String... args) throws Exception {
 		/*Book book1 = new Book();
 		book1.setTitle("Spring Boot in Action");
 		book1.setWriter("Erick Kurniawan");
@@ -159,7 +159,7 @@ public class SpringdatajpapgsqlApplication implements CommandLineRunner {
 		studentRepository.save(student1);
 		LOG.info("-----> Berhasil mendaftarkan student1 ke course1");*/
 
-		List<Student> students = studentRepository.findAll();
+		/*List<Student> students = studentRepository.findAll();
 		for(Student student : students){
 			LOG.info("-----> Student: "+student.getName());
 			for(Course course : student.getCourses()){
@@ -173,7 +173,7 @@ public class SpringdatajpapgsqlApplication implements CommandLineRunner {
 			for(Student student : course.getStudents()){
 				LOG.info("----------------> Student: "+student.getName());
 			}
-		}
+		}*/
 
-	}
+	//}
 }
