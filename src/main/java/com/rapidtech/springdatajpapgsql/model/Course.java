@@ -1,6 +1,7 @@
 package com.rapidtech.springdatajpapgsql.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,5 +56,13 @@ public class Course {
 
     public void setFee(double fee) {
         this.fee = fee;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 }

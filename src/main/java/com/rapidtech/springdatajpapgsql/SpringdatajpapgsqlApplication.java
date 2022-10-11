@@ -8,6 +8,8 @@ import com.rapidtech.springdatajpapgsql.repository.BookCategoryRepository;
 import com.rapidtech.springdatajpapgsql.repository.BookRepository;
 import com.rapidtech.springdatajpapgsql.repository.CourseRepository;
 import com.rapidtech.springdatajpapgsql.repository.StudentRepository;
+import org.apache.commons.logging.Log;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,9 +141,9 @@ public class SpringdatajpapgsqlApplication implements CommandLineRunner {
 		Student student2 = new Student("Tom",19);
 		studentRepository.save(student1);
 		studentRepository.save(student2);
-		LOG.info("-----> Berhasil menambahkan data");*/
+		LOG.info("-----> Berhasil menambahkan data");
 
-		/*Course course1 = new Course("Introduction to Spring Boot",12,1000);
+		Course course1 = new Course("Introduction to Spring Boot",12,1000);
 		Course course2 = new Course("RESTful API with Spring Boot",15,1200);
 		Course course3 = new Course("Spring Boot Microservices",12,1500);
 
@@ -149,12 +151,29 @@ public class SpringdatajpapgsqlApplication implements CommandLineRunner {
 		LOG.info("-----> Berhasil menambahkan data courses");*/
 
 		//student1 ditambahkan ke course1
-		Student student1 = studentRepository.findById(1l).get();
-		Course course1 = courseRepository.findById(1l).get();
+		/*Student student1 = studentRepository.findById(1l).get();
+		Course course1 = courseRepository.findById(2l).get();
 
-		student1.getCourses().addAll(Arrays.asList(course1));
+		student1.getCourses().add(course1);
 
 		studentRepository.save(student1);
-		LOG.info("-----> Berhasil mendaftarkan student1 ke course1");
+		LOG.info("-----> Berhasil mendaftarkan student1 ke course1");*/
+
+		List<Student> students = studentRepository.findAll();
+		for(Student student : students){
+			LOG.info("-----> Student: "+student.getName());
+			for(Course course : student.getCourses()){
+				LOG.info("-------------> course: "+course.getTitle());
+			}
+		}
+
+		List<Course> courses = courseRepository.findAll();
+		for(Course course : courses){
+			LOG.info("-----> Course: "+course.getTitle());
+			for(Student student : course.getStudents()){
+				LOG.info("----------------> Student: "+student.getName());
+			}
+		}
+
 	}
 }
