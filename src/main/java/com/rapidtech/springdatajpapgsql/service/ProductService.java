@@ -9,4 +9,6 @@ public interface ProductService {
     Product findProductById(Long id);
     Product saveOrUpdateProduct(Product product);
     void deleteProduct(Long id);
+    List<Product> findAllByName(String name);
+    List<Product> findAllByPrice(double price);
 }
