@@ -1,7 +1,9 @@
 package com.rapidtech.springdatajpapgsql.service.impl;
 
+import com.rapidtech.springdatajpapgsql.dto.BookCategoryResDto;
 import com.rapidtech.springdatajpapgsql.dto.BookReqDto;
 import com.rapidtech.springdatajpapgsql.dto.BookResDto;
+import com.rapidtech.springdatajpapgsql.dto.BookWithCategoryDto;
 import com.rapidtech.springdatajpapgsql.model.Book;
 import com.rapidtech.springdatajpapgsql.model.BookCategory;
 import com.rapidtech.springdatajpapgsql.repository.BookRepository;
@@ -28,6 +30,22 @@ public class BookServiceImpl implements BookService {
                     book.getIsbn()));
         }
         return booksDto;
+    }
+
+    @Override
+    public List<BookWithCategoryDto> getAllBookWithCat() {
+        List<BookWithCategoryDto> bookWithCategoryDtoList = new ArrayList<>();
+        List<Book> books = bookRepository.findAll();
+        for(Book book : books){
+            bookWithCategoryDtoList.add(BookWithCategoryDto.builder()
+                    .id(book.getId()).title(book.getTitle())
+                    .writer(book.getWriter()).isbn(book.getIsbn())
+                    .bookCategoryResDto(
+                            BookCategoryResDto.builder()
+                                    .id(book.getBookCategory().getId())
+                                    .name(book.getBookCategory().getName()).build()).build());
+        }
+        return bookWithCategoryDtoList;
     }
 
     @Override

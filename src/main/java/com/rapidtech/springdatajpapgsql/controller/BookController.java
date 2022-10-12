@@ -2,6 +2,7 @@ package com.rapidtech.springdatajpapgsql.controller;
 
 import com.rapidtech.springdatajpapgsql.dto.BookReqDto;
 import com.rapidtech.springdatajpapgsql.dto.BookResDto;
+import com.rapidtech.springdatajpapgsql.dto.BookWithCategoryDto;
 import com.rapidtech.springdatajpapgsql.model.Book;
 import com.rapidtech.springdatajpapgsql.model.Student;
 import com.rapidtech.springdatajpapgsql.service.BookService;
@@ -21,6 +22,11 @@ public class BookController {
     @GetMapping
     public List<BookResDto> get(){
         return bookService.getAllBook();
+    }
+
+    @GetMapping("/withcategory")
+    public List<BookWithCategoryDto> getBookWithCategory(){
+        return bookService.getAllBookWithCat();
     }
 
     @GetMapping("/{id}")
