@@ -1,5 +1,6 @@
 package com.rapidtech.springdatajpapgsql.controller;
 
+import com.rapidtech.springdatajpapgsql.dto.BookCategoryResDto;
 import com.rapidtech.springdatajpapgsql.model.BookCategory;
 import com.rapidtech.springdatajpapgsql.service.BookCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,12 @@ public class BookCategoryController {
     private BookCategoryService bookCategoryService;
 
     @GetMapping
-    public List<BookCategory> getAll(){
+    public List<BookCategoryResDto> getAll(){
         return bookCategoryService.getAll();
     }
 
     @GetMapping("/{id}")
-    public BookCategory getById(@PathVariable("id") Long id){
+    public BookCategoryResDto getById(@PathVariable("id") Long id){
         return bookCategoryService.getById(id);
     }
 

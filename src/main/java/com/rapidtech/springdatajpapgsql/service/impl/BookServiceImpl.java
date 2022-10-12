@@ -1,12 +1,15 @@
 package com.rapidtech.springdatajpapgsql.service.impl;
 
+import com.rapidtech.springdatajpapgsql.dto.BookResDto;
 import com.rapidtech.springdatajpapgsql.model.Book;
 import com.rapidtech.springdatajpapgsql.repository.BookRepository;
 import com.rapidtech.springdatajpapgsql.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -15,13 +18,26 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Override
-    public List<Book> getAllBook() {
-        return bookRepository.findAll();
+    public List<BookResDto> getAllBook() {
+        List<BookResDto> booksDto = new ArrayList<>();
+        List<Book> books = bookRepository.findAll();
+        for(Book book : books){
+            booksDto.add(new BookResDto(book.getId(),book.getTitle(),book.getWriter(),
+                    book.getIsbn()));
+        }
+        return booksDto;
     }
 
     @Override
-    public Book getBookById(Long id) {
-        return bookRepository.findById(id).get();
+    public BookResDto getBookById(Long id) {
+        BookResDto bookResDto = new BookResDto();
+        Book book = bookRepository.findById(id).orElse(new Book());
+        bookResDto.setId(book.getId());
+        bookResDto.setTitle(book.getTitle());
+        bookResDto.setWriter(book.getWriter());
+        bookResDto.setIsbn(book.getIsbn());
+
+        return bookResDto;
     }
 
     @Override

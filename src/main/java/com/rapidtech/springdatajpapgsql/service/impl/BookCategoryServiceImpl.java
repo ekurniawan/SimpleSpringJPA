@@ -1,5 +1,6 @@
 package com.rapidtech.springdatajpapgsql.service.impl;
 
+import com.rapidtech.springdatajpapgsql.dto.BookCategoryResDto;
 import com.rapidtech.springdatajpapgsql.model.BookCategory;
 import com.rapidtech.springdatajpapgsql.repository.BookCategoryRepository;
 import com.rapidtech.springdatajpapgsql.service.BookCategoryService;
@@ -15,13 +16,25 @@ public class BookCategoryServiceImpl implements BookCategoryService {
     private BookCategoryRepository bookCategoryRepository;
 
     @Override
-    public List<BookCategory> getAll() {
-        return bookCategoryRepository.findAll();
+    public List<BookCategoryResDto> getAll() {
+        List<BookCategory> bookCategories = bookCategoryRepository.findAll();
+        List<BookCategoryResDto> bookCategoriesDto =
+                bookCategories.stream().map(this::mapToProductResponse).toList();
+        return bookCategoriesDto;
+    }
+
+    private BookCategoryResDto mapToProductResponse(BookCategory bookCategory) {
+        return BookCategoryResDto.builder()
+                .id(bookCategory.getId())
+                .name(bookCategory.getName())
+                .build();
     }
 
     @Override
-    public BookCategory getById(Long id) {
-        return bookCategoryRepository.findById(id).get();
+    public BookCategoryResDto getById(Long id) {
+        BookCategory bookCategory = bookCategoryRepository.findById(id).get();
+        BookCategoryResDto bookCategoryResDto = mapToProductResponse(bookCategory);
+        return bookCategoryResDto;
     }
 
     @Override
