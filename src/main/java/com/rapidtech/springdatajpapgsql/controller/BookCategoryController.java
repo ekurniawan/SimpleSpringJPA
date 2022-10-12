@@ -35,4 +35,10 @@ public class BookCategoryController {
     public BookCategory put(@PathVariable("id") Long id,@RequestBody BookCategory bookCategory){
         return bookCategoryService.updateBookCategory(id,bookCategory);
     }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") Long id){
+        bookCategoryService.deleteBookCategory(id);
+        return "Data id "+id.toString()+" berhasil dihapus";
+    }
 }
