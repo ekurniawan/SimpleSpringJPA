@@ -1,5 +1,6 @@
 package com.rapidtech.springdatajpapgsql.service.impl;
 
+import com.rapidtech.springdatajpapgsql.dto.BookCategoryReqDto;
 import com.rapidtech.springdatajpapgsql.dto.BookCategoryResDto;
 import com.rapidtech.springdatajpapgsql.model.BookCategory;
 import com.rapidtech.springdatajpapgsql.repository.BookCategoryRepository;
@@ -38,20 +39,32 @@ public class BookCategoryServiceImpl implements BookCategoryService {
     }
 
     @Override
-    public BookCategory insertBookCategory(BookCategory bookCategory) {
-        return bookCategoryRepository.save(bookCategory);
+    public BookCategoryResDto insertBookCategory(BookCategoryReqDto bookCategoryDto) {
+        BookCategory bookCategory = new BookCategory();
+        bookCategory.setName(bookCategoryDto.getName());
+        BookCategory result = bookCategoryRepository.save(bookCategory);
+
+        BookCategoryResDto bookCatRes = new BookCategoryResDto();
+        bookCatRes.setId(result.getId());
+        bookCatRes.setName(result.getName());
+
+        return bookCatRes;
     }
 
     @Override
-    public BookCategory updateBookCategory(Long id, BookCategory bookCategory) {
-        Optional<BookCategory> editCatOpt = bookCategoryRepository.findById(id);
-        BookCategory editCat = new BookCategory();
-        if(editCatOpt.isPresent()){
-            editCat = editCatOpt.get();
-            editCat.setName(bookCategory.getName());
-            bookCategoryRepository.save(editCat);
-        }
-        return editCat;
+    public BookCategoryResDto updateBookCategory(Long id,BookCategoryReqDto bookCategoryDto) {
+        BookCategory bookCategory = bookCategoryRepository.findById(id).get();
+        BookCategory bookCatEdit = new BookCategory();
+        bookCatEdit.setId(bookCategory.getId());
+        bookCatEdit.setName(bookCategoryDto.getName());
+
+        BookCategory result = bookCategoryRepository.save(bookCatEdit);
+
+        BookCategoryResDto bookCatRes = new BookCategoryResDto();
+        bookCatRes.setId(result.getId());
+        bookCatRes.setName(result.getName());
+
+        return bookCatRes;
     }
 
     @Override

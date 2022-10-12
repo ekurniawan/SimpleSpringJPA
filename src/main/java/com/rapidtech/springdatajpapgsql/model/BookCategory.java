@@ -1,11 +1,20 @@
 package com.rapidtech.springdatajpapgsql.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookCategory {
     @Id
     @GeneratedValue
@@ -14,46 +23,4 @@ public class BookCategory {
 
     @OneToMany(mappedBy = "bookCategory",cascade = CascadeType.ALL)
     private List<Book> books;
-
-    public BookCategory() {
-    }
-
-    public BookCategory(String name, Book... books){
-        this.name = name;
-        this.books = Stream.of(books).collect(Collectors.toList());
-        this.books.forEach(x->x.setBookCategory(this));
-    }
-
-    @Override
-    public String toString() {
-        return "BookCategory{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", books=" + books +
-                '}';
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
 }

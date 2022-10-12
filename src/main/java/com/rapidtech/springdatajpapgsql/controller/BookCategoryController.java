@@ -1,5 +1,6 @@
 package com.rapidtech.springdatajpapgsql.controller;
 
+import com.rapidtech.springdatajpapgsql.dto.BookCategoryReqDto;
 import com.rapidtech.springdatajpapgsql.dto.BookCategoryResDto;
 import com.rapidtech.springdatajpapgsql.model.BookCategory;
 import com.rapidtech.springdatajpapgsql.service.BookCategoryService;
@@ -28,12 +29,12 @@ public class BookCategoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookCategory post(@RequestBody BookCategory bookCategory){
+    public BookCategoryResDto post(@RequestBody BookCategoryReqDto bookCategory){
         return bookCategoryService.insertBookCategory(bookCategory);
     }
 
     @PutMapping("{id}")
-    public BookCategory put(@PathVariable("id") Long id,@RequestBody BookCategory bookCategory){
+    public BookCategoryResDto put(@PathVariable("id") Long id,@RequestBody BookCategoryReqDto bookCategory){
         return bookCategoryService.updateBookCategory(id,bookCategory);
     }
 

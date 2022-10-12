@@ -1,5 +1,6 @@
 package com.rapidtech.springdatajpapgsql.controller;
 
+import com.rapidtech.springdatajpapgsql.dto.BookReqDto;
 import com.rapidtech.springdatajpapgsql.dto.BookResDto;
 import com.rapidtech.springdatajpapgsql.model.Book;
 import com.rapidtech.springdatajpapgsql.model.Student;
@@ -29,13 +30,13 @@ public class BookController {
     }
 
     @PostMapping
-    public Book post(@RequestBody Book book){
+    public BookResDto post(@RequestBody BookReqDto book){
         return bookService.insertBook(book);
     }
 
-    @PutMapping
-    public Book put(@RequestBody Book book){
-        return bookService.updateBook(book);
+    @PutMapping("/{id}")
+    public BookResDto put(@PathVariable("id") Long id, @RequestBody BookReqDto book){
+        return bookService.updateBook(id,book);
     }
 
     @DeleteMapping("/{id}")
