@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,6 +21,6 @@ public class Course {
     private int modules;
     private double fee;
 
-    @ManyToMany(mappedBy = "courses",fetch = FetchType.EAGER)
-    private Set<Student> students = new HashSet<>();
+    @ManyToMany(mappedBy = "courses",fetch = FetchType.LAZY)
+    private List<Student> students;
 }

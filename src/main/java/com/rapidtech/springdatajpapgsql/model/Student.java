@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,7 +22,7 @@ public class Student {
     private String name;
     private int age;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "students_courses",
             joinColumns = {
             @JoinColumn(name = "student_id",referencedColumnName = "id",
@@ -31,5 +32,5 @@ public class Student {
             @JoinColumn(name = "course_id",referencedColumnName = "id",
                     nullable = false,updatable = false)
     })
-    private Set<Course> courses = new HashSet<>();
+    private List<Course> courses;
 }
