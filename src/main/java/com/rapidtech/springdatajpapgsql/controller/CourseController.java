@@ -3,6 +3,7 @@ package com.rapidtech.springdatajpapgsql.controller;
 import com.rapidtech.springdatajpapgsql.dto.CourseReqDto;
 import com.rapidtech.springdatajpapgsql.dto.CourseResDto;
 import com.rapidtech.springdatajpapgsql.dto.CourseWithStudentDto;
+import com.rapidtech.springdatajpapgsql.dto.CourseWithStudentResDto;
 import com.rapidtech.springdatajpapgsql.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,15 @@ public class CourseController {
         courseService.registerStudentToCourse(courseWithStudentDto);
         return "Berhasil menambahkan student " +courseWithStudentDto.getStudentId().toString()+
                 " ke course "+courseWithStudentDto.getCourseId().toString();
+    }
+
+    @GetMapping("/{id}")
+    public CourseWithStudentResDto getCourseWithStudentById(@PathVariable("id") Long id){
+        return courseService.getCourseWithStudentById(id);
+    }
+
+    @GetMapping("/withstudents")
+    public List<CourseWithStudentResDto> getAllCourseWithStudent(){
+        return courseService.getAllCourseWithStudent();
     }
 }

@@ -1,8 +1,6 @@
 package com.rapidtech.springdatajpapgsql.service.impl;
 
-import com.rapidtech.springdatajpapgsql.dto.CourseReqDto;
-import com.rapidtech.springdatajpapgsql.dto.CourseResDto;
-import com.rapidtech.springdatajpapgsql.dto.CourseWithStudentDto;
+import com.rapidtech.springdatajpapgsql.dto.*;
 import com.rapidtech.springdatajpapgsql.model.Course;
 import com.rapidtech.springdatajpapgsql.model.Student;
 import com.rapidtech.springdatajpapgsql.repository.CourseRepository;
@@ -12,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,5 +61,51 @@ public class CourseServiceImpl implements CourseService {
 
         student.getCourses().add(course);
         studentRepository.save(student);
+    }
+
+
+    @Override
+    public CourseWithStudentResDto getCourseWithStudentById(Long id) {
+        Course course = courseRepository.findById(id).get();
+        List<Student> studentList = course.getStudents();
+        List<StudentResDto> studentResDtoList = new ArrayList<>();
+        for(Student student : studentList){
+            studentResDtoList.add(StudentResDto.builder()
+                    .id(student.getId())
+                    .name(student.getName())
+                    .age(student.getAge())
+                    .build());
+        }
+        return CourseWithStudentResDto.builder()
+                .id(course.getId())
+                .title(course.getTitle())
+                .modules(course.getModules())
+                .fee(course.getFee())
+                .studentResDtoList(studentResDtoList)
+                .build();
+    }
+
+    @Override
+    public List<CourseWithStudentResDto> getAllCourseWithStudent() {
+        List<Course> courses = courseRepository.findAll();
+        List<CourseWithStudentResDto> courseWithStudentResDtoList = new ArrayList<>();
+        for(Course course : courses){
+            List<StudentResDto> studentResDtoList = new ArrayList<>();
+            for(Student student : course.getStudents()){
+                studentResDtoList.add(StudentResDto.builder()
+                        .id(student.getId()).name(student.getName())
+                        .age(student.getAge()).build());
+            }
+            courseWithStudentResDtoList.add(
+              CourseWithStudentResDto.builder()
+                      .id(course.getId())
+                      .title(course.getTitle())
+                      .modules(course.getModules())
+                      .fee(course.getFee())
+                      .studentResDtoList(studentResDtoList)
+                      .build()
+            );
+        }
+        return courseWithStudentResDtoList;
     }
 }
