@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,11 +17,8 @@ public class DAOUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column
     private String username;
 
-    @Column
     @JsonIgnore
     private String password;
 }
