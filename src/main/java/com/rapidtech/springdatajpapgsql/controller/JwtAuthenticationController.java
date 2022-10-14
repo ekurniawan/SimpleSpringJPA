@@ -5,6 +5,11 @@ import com.rapidtech.springdatajpapgsql.dto.UserDto;
 import com.rapidtech.springdatajpapgsql.model.JwtRequest;
 import com.rapidtech.springdatajpapgsql.model.JwtResponse;
 import com.rapidtech.springdatajpapgsql.service.impl.JwtUserDetailsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +35,12 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtUserDetailsService userDetailsService;
 
+    @Operation(summary = "Mendaftarkan Pengguna Baru",description = "Mendaftarkan pengguna baru")
+    @ApiResponses(value={@ApiResponse(responseCode = "200",
+            description = "Berhasil menambahkan pengguna baru",
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UserDetails.class))}),
+    @ApiResponse(responseCode = "401",description = "Gagal menambahkan user baru",content = @Content)})
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserDto userDto) {
         return ResponseEntity.ok(userDetailsService.save(userDto));
